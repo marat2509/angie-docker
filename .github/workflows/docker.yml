@@ -43,8 +43,8 @@ jobs:
               type=raw,value=stable-alpine,enable={{is_default_branch}}
               type=raw,value=stable-alpine-,enable=${{ ! github.event.repository.default_branch }}
               type=raw,value=alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=raw,prefix=alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=raw,prefix=stable-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
+              type=raw,value=alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
+              type=raw,value=stable-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=stable-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=raw,value=$VERSION,enable={{is_default_branch}}
@@ -62,8 +62,8 @@ jobs:
               type=raw,value=stable-debug-alpine,enable={{is_default_branch}}
               type=raw,value=stable-debug-alpine-,enable=${{ ! github.event.repository.default_branch }}
               type=raw,value=debug-alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=raw,prefix=debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=raw,prefix=stable-debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
+              type=raw,value=debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
+              type=raw,value=stable-debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=debug-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=stable-debug-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=raw,value=$VERSION-debug,enable={{is_default_branch}}
