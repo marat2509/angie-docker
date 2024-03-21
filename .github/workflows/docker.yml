@@ -40,30 +40,30 @@ jobs:
               type=raw,value=alpine,enable={{is_default_branch}}
               type=raw,value=stable,enable={{is_default_branch}}
               type=raw,value=stable-alpine,enable={{is_default_branch}}
-              type=raw,value=stable-alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=raw,value=alpine-,enable=${{ ! github.event.repository.default_branch }}
+              type=sha,prefix=stable-alpine-,enable=${{ ! github.event.repository.default_branch }}
+              type=sha,prefix=alpine-,enable=${{ ! github.event.repository.default_branch }}
               type=raw,value=alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=raw,value=stable-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
           - name: alpine-debug
             context: stable/alpine/default/debug
             tags: |
+              type=raw,value=stable-debug,enable={{is_default_branch}}
               type=raw,value=latest-debug,enable={{is_default_branch}}
               type=raw,value=alpine-debug,enable={{is_default_branch}}
-              type=raw,value=stable-debug,enable={{is_default_branch}}
-              type=raw,value=stable-debug-alpine,enable={{is_default_branch}}
-              type=raw,value=stable-debug-alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=raw,value=debug-alpine-,enable=${{ ! github.event.repository.default_branch }}
+              type=sha,prefix=stable-debug-alpine,enable={{is_default_branch}}
+              type=sha,prefix=stable-debug-alpine-,enable=${{ ! github.event.repository.default_branch }}
+              type=sha,prefix=debug-alpine-,enable=${{ ! github.event.repository.default_branch }}
               type=raw,value=debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=raw,value=stable-debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
           - name: alpine-modules
             context: stable/alpine/modules/release
             tags: |
+              type=raw,value=stable-modules,enable={{is_default_branch}}
               type=raw,value=latest-modules,enable={{is_default_branch}}
               type=raw,value=alpine-modules,enable={{is_default_branch}}
-              type=raw,value=stable-modules,enable={{is_default_branch}}
-              type=raw,value=stable-modules-alpine,enable={{is_default_branch}}
-              type=raw,value=stable-modules-alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=raw,value=modules-alpine-,enable=${{ ! github.event.repository.default_branch }}
+              type=sha,prefix=stable-modules-alpine,enable={{is_default_branch}}
+              type=sha,prefix=stable-modules-alpine-,enable=${{ ! github.event.repository.default_branch }}
+              type=sha,prefix=modules-alpine-,enable=${{ ! github.event.repository.default_branch }}
               type=raw,value=modules-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=raw,value=stable-modules-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
           
