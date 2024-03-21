@@ -28,45 +28,75 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # On main branch:
-          # latest, alpine, stable, stable-alpine, alpine-abcdefg, alpine-stable-abcdefg
-          # On other branches:
-          # stable-alpine-abcdefg, alpine-stable-abcdefg
-          # stable-alpine-dev, alpine-dev
           - name: alpine
             context: stable/alpine/default/release
             tags: |
               type=raw,value=latest,enable={{is_default_branch}}
               type=raw,value=alpine,enable={{is_default_branch}}
-              type=raw,value=stable,enable={{is_default_branch}}
-              type=raw,value=stable-alpine,enable={{is_default_branch}}
-              type=sha,prefix=stable-alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=sha,prefix=alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=raw,value=alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=raw,value=stable-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
           - name: alpine-debug
             context: stable/alpine/default/debug
             tags: |
-              type=raw,value=stable-debug,enable={{is_default_branch}}
-              type=raw,value=latest-debug,enable={{is_default_branch}}
-              type=raw,value=alpine-debug,enable={{is_default_branch}}
-              type=sha,prefix=stable-debug-alpine,enable={{is_default_branch}}
-              type=sha,prefix=stable-debug-alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=sha,prefix=debug-alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=raw,value=debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=raw,value=stable-debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
+              type=raw,value=debug,enable={{is_default_branch}}
+              type=raw,value=debug-alpine,enable={{is_default_branch}}
           - name: alpine-modules
             context: stable/alpine/modules/release
             tags: |
-              type=raw,value=stable-modules,enable={{is_default_branch}}
-              type=raw,value=latest-modules,enable={{is_default_branch}}
-              type=raw,value=alpine-modules,enable={{is_default_branch}}
-              type=sha,prefix=stable-modules-alpine,enable={{is_default_branch}}
-              type=sha,prefix=stable-modules-alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=sha,prefix=modules-alpine-,enable=${{ ! github.event.repository.default_branch }}
-              type=raw,value=modules-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=raw,value=stable-modules-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
-          
+              type=raw,value=modules,enable={{is_default_branch}}
+              type=raw,value=modules-alpine,enable={{is_default_branch}}
+          - name: alpine-modules-debug
+            context: stable/alpine/modules/debug
+            tags: |
+              type=raw,value=modules-debug,enable={{is_default_branch}}
+              type=raw,value=modules-debug-alpine,enable={{is_default_branch}}
+          - name: debian
+            context: stable/debian/default/release
+            tags: |
+              type=raw,value=debian,enable={{is_default_branch}}
+          - name: debug-debian
+            context: stable/debian/default/debug
+            tags: |
+              type=raw,value=debug-debian,enable={{is_default_branch}}
+          - name: modules-debian
+            context: stable/debian/modules/release
+            tags: |
+              type=raw,value=modules-debian,enable={{is_default_branch}}
+          - name: modules-debug-debian
+            context: stable/debian/modules/debug
+            tags: |
+              type=raw,value=modules-debug-debian,enable={{is_default_branch}}
+          - name: ubuntu
+            context: stable/ubuntu/default/release
+            tags: |
+              type=raw,value=ubuntu,enable={{is_default_branch}}
+          - name: debug-ubuntu
+            context: stable/ubuntu/default/debug
+            tags: |
+              type=raw,value=debug-ubuntu,enable={{is_default_branch}}
+          - name: modules-ubuntu
+            context: stable/ubuntu/modules/release
+            tags: |
+              type=raw,value=modules-ubuntu,enable={{is_default_branch}}
+          - name: modules-debug-ubuntu
+            context: stable/ubuntu/modules/debug
+            tags: |
+              type=raw,value=modules-debug-ubuntu,enable={{is_default_branch}}
+          - name: centos
+            context: stable/centos/default/release
+            tags: |
+              type=raw,value=centos,enable={{is_default_branch}}
+          - name: debug-centos
+            context: stable/centos/default/debug
+            tags: |
+              type=raw,value=debug-centos,enable={{is_default_branch}}
+          - name: modules-centos
+            context: stable/centos/modules/release
+            tags: |
+              type=raw,value=modules-centos,enable={{is_default_branch}}
+          - name: modules-debug-centos
+            context: stable/centos/modules/debug
+            tags: |
+              type=raw,value=modules-debug-centos,enable={{is_default_branch}}
+
     permissions:
       contents: read
       packages: write
