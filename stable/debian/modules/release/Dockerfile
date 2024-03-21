@@ -1,17 +1,18 @@
-FROM alpine:3.18
+FROM debian:bookworm-slim
 
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
-    curl
+    curl \
+    lsb-release \
+    patch
 
-RUN curl -o /etc/apk/keys/angie-signing.rsa \
-            https://angie.software/keys/angie-signing.rsa
+RUN curl -o /etc/apt/trusted.gpg.d/angie-signing.gpg \
+            https://angie.software/keys/angie-signing.gpg
 
-RUN echo "https://download.angie.software/angie/alpine/v$(egrep -o \
-       '[0-9]+\.[0-9]+' /etc/alpine-release)/main" \
-       | tee -a /etc/apk/repositories > /dev/null
+RUN echo "deb https://download.angie.software/angie/debian/ `lsb_release -cs` main" \
+       | tee /etc/apt/sources.list.d/angie.list > /dev/null
 
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     angie \
     angie-module-auth-jwt \
     angie-module-auth-ldap \
@@ -39,13 +40,18 @@ RUN apk add --no-cache \
     angie-module-vod \
     angie-module-zip
 
-RUN if [ -f "/etc/apk/keys/angie-signing.rsa" ]; then rm -f /etc/apk/keys/angie-signing.rsa; fi
+RUN if [ -f "/etc/apt/trusted.gpg.d/angie-signing.gpg" ]; then rm -f /etc/apt/trusted.gpg.d/angie-signing.gpg; fi
 
 RUN ln -sf /dev/stdout /var/log/angie/access.log \
     && ln -sf /dev/stderr /var/log/angie/error.log
+
+RUN rm -rf /var/lib/apt/lists
+
+COPY config.patch /tmp
+RUN patch -p1 < /tmp/config.patch
 
 EXPOSE 80
 
 STOPSIGNAL SIGQUIT
 
-CMD [ "angie", "-g", "daemon off;"]
+CMD [ "angie", "-g", "daemon off;" ]

@@ -1,4 +1,6 @@
-FROM alpine:3.18
+FROM alpine:3.19
+
+ENV version 1.4.1-r0
 
 RUN apk add --no-cache \
     ca-certificates \
@@ -12,7 +14,7 @@ RUN echo "https://download.angie.software/angie/alpine/v$(egrep -o \
        | tee -a /etc/apk/repositories > /dev/null
 
 RUN apk add --no-cache \
-    angie
+    angie=$version
 
 RUN if [ -f "/etc/apk/keys/angie-signing.rsa" ]; then rm -f /etc/apk/keys/angie-signing.rsa; fi
 
@@ -23,4 +25,4 @@ EXPOSE 80
 
 STOPSIGNAL SIGQUIT
 
-CMD [ "angie", "-g", "daemon off;"]
+CMD [ "angie-debug", "-g", "daemon off;"]

@@ -15,29 +15,59 @@ on:
 env:
   REGISTRY: ghcr.io
   PLATFORMS: linux/amd64,linux/arm64
+  VERSION: "1.4.1"
+  VERSION_MINOR: "1.4"
+  VERSION_MAJOR: "1"
 
 
 jobs:
   build:
-    name: Build for ${{ matrix.context }}
+    name: Build for ${{ matrix.name }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: ./stable/alpine/Dockerfile
-            context: stable/alpine
+          # On main branch:
+          # latest, alpine, stable, stable-alpine, alpine-abcdefg, alpine-stable-abcdefg
+          # 1.2.3, 1.2, 1, 1.2.3-alpine, 1.2-alpine, 1-alpine
+          # On other branches:
+          # stable-alpine-abcdefg, alpine-stable-abcdefg
+          # stable-alpine-dev, alpine-dev
+          - name: alpine
+            context: stable/alpine/default/release
             tags: |
-              type=raw,value=latest,enable=true
-              type=sha,prefix=latest-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=ref,event=branch
-              type=raw,value=alpine
-              type=raw,value=stable
-          - dockerfile: ./stable/alpine-modules/Dockerfile
-            context: stable/alpine-modules
+              type=raw,value=latest,enable={{is_default_branch}}
+              type=raw,value=alpine,enable={{is_default_branch}}
+              type=raw,value=stable,enable={{is_default_branch}}
+              type=raw,value=stable-alpine,enable={{is_default_branch}}
+              type=branch,prefix=stable-alpine-,enable={{!is_default_branch}}
+              type=branch,prefix=alpine-,enable={{!is_default_branch}}
+              type=sha,prefix=alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
+              type=sha,prefix=stable-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
+              type=raw,value=${{ env.VERSION }},enable={{is_default_branch}}
+              type=raw,value=${{ env.VERSION_MINOR }},enable={{is_default_branch}}
+              type=raw,value=${{ env.VERSION_MAJOR }},enable={{is_default_branch}}
+              type=raw,value=${{ env.VERSION }}-alpine,enable={{is_default_branch}}
+              type=raw,value=${{ env.VERSION_MINOR }}-alpine,enable={{is_default_branch}}
+              type=raw,value=${{ env.VERSION_MAJOR }}-alpine,enable={{is_default_branch}}
+          - name: alpine-debug
+            context: stable/alpine/default/debug
             tags: |
-              type=sha,prefix=latest-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=raw,value=alpine-modules
+              type=raw,value=latest-debug,enable={{is_default_branch}}
+              type=raw,value=alpine-debug,enable={{is_default_branch}}
+              type=raw,value=stable-debug,enable={{is_default_branch}}
+              type=raw,value=stable-debug-alpine,enable={{is_default_branch}}
+              type=branch,prefix=stable-debug-alpine-,enable={{!is_default_branch}}
+              type=branch,prefix=debug-alpine-,enable={{!is_default_branch}}
+              type=sha,prefix=debug-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
+              type=sha,prefix=stable-debug-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
+              type=raw,value=${{ env.VERSION }}-debug,enable={{is_default_branch}}
+              type=raw,value=${{ env.VERSION_MINOR }}-debug,enable={{is_default_branch}}
+              type=raw,value=${{ env.VERSION_MAJOR }}-debug,enable={{is_default_branch}}
+              type=raw,value=${{ env.VERSION }}-debug-alpine,enable={{is_default_branch}}
+              type=raw,value=${{ env.VERSION_MINOR }}-debug-alpine,enable={{is_default_branch}}
+              type=raw,value=${{ env.VERSION_MAJOR }}-debug-alpine,enable={{is_default_branch}}
           
     permissions:
       contents: read
