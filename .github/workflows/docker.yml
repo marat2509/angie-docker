@@ -30,7 +30,6 @@ jobs:
         include:
           # On main branch:
           # latest, alpine, stable, stable-alpine, alpine-abcdefg, alpine-stable-abcdefg
-          # 1.2.3, 1.2, 1, 1.2.3-alpine, 1.2-alpine, 1-alpine
           # On other branches:
           # stable-alpine-abcdefg, alpine-stable-abcdefg
           # stable-alpine-dev, alpine-dev
@@ -45,14 +44,6 @@ jobs:
               type=raw,value=alpine-,enable=${{ ! github.event.repository.default_branch }}
               type=raw,value=alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=raw,value=stable-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=sha,prefix=alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=sha,prefix=stable-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=semver,pattern={{version}},enable={{is_default_branch}}
-              type=semver,pattern={{major}}.{{minor}},enable={{is_default_branch}}
-              type=semver,pattern={{major}},enable={{is_default_branch}}
-              type=semver,pattern={{major}}.{{minor}}.{{patch}}-alpine,enable={{is_default_branch}}
-              type=semver,pattern={{major}}.{{minor}}-alpine,enable={{is_default_branch}}
-              type=semver,pattern={{major}}-alpine,enable={{is_default_branch}}
           - name: alpine-debug
             context: stable/alpine/default/debug
             tags: |
@@ -64,14 +55,17 @@ jobs:
               type=raw,value=debug-alpine-,enable=${{ ! github.event.repository.default_branch }}
               type=raw,value=debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=raw,value=stable-debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=sha,prefix=debug-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=sha,prefix=stable-debug-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=semver,pattern={{version}},enable={{is_default_branch}}
-              type=semver,pattern={{major}}.{{minor}},enable={{is_default_branch}}
-              type=semver,pattern={{major}},enable={{is_default_branch}}
-              type=semver,pattern={{major}}.{{minor}}.{{patch}}-alpine,enable={{is_default_branch}}
-              type=semver,pattern={{major}}.{{minor}}-alpine,enable={{is_default_branch}}
-              type=semver,pattern={{major}}-alpine,enable={{is_default_branch}}
+          - name: alpine-modules
+            context: stable/alpine/modules/release
+            tags: |
+              type=raw,value=latest-modules,enable={{is_default_branch}}
+              type=raw,value=alpine-modules,enable={{is_default_branch}}
+              type=raw,value=stable-modules,enable={{is_default_branch}}
+              type=raw,value=stable-modules-alpine,enable={{is_default_branch}}
+              type=raw,value=stable-modules-alpine-,enable=${{ ! github.event.repository.default_branch }}
+              type=raw,value=modules-alpine-,enable=${{ ! github.event.repository.default_branch }}
+              type=raw,value=modules-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
+              type=raw,value=stable-modules-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
           
     permissions:
       contents: read
