@@ -29,71 +29,71 @@ jobs:
       matrix:
         include:
           - name: alpine
-            context: stable/alpine/default/release
+            context: docker/alpine/default/release
             tags: |
               type=raw,value=latest,enable={{is_default_branch}}
               type=raw,value=alpine,enable={{is_default_branch}}
           - name: alpine-debug
-            context: stable/alpine/default/debug
+            context: docker/alpine/default/debug
             tags: |
               type=raw,value=debug,enable={{is_default_branch}}
               type=raw,value=debug-alpine,enable={{is_default_branch}}
           - name: alpine-modules
-            context: stable/alpine/modules/release
+            context: docker/alpine/modules/release
             tags: |
               type=raw,value=modules,enable={{is_default_branch}}
               type=raw,value=modules-alpine,enable={{is_default_branch}}
           - name: alpine-modules-debug
-            context: stable/alpine/modules/debug
+            context: docker/alpine/modules/debug
             tags: |
               type=raw,value=modules-debug,enable={{is_default_branch}}
               type=raw,value=modules-debug-alpine,enable={{is_default_branch}}
           - name: debian
-            context: stable/debian/default/release
+            context: docker/debian/default/release
             tags: |
               type=raw,value=debian,enable={{is_default_branch}}
           - name: debug-debian
-            context: stable/debian/default/debug
+            context: docker/debian/default/debug
             tags: |
               type=raw,value=debug-debian,enable={{is_default_branch}}
           - name: modules-debian
-            context: stable/debian/modules/release
+            context: docker/debian/modules/release
             tags: |
               type=raw,value=modules-debian,enable={{is_default_branch}}
           - name: modules-debug-debian
-            context: stable/debian/modules/debug
+            context: docker/debian/modules/debug
             tags: |
               type=raw,value=modules-debug-debian,enable={{is_default_branch}}
           - name: ubuntu
-            context: stable/ubuntu/default/release
+            context: docker/ubuntu/default/release
             tags: |
               type=raw,value=ubuntu,enable={{is_default_branch}}
           - name: debug-ubuntu
-            context: stable/ubuntu/default/debug
+            context: docker/ubuntu/default/debug
             tags: |
               type=raw,value=debug-ubuntu,enable={{is_default_branch}}
           - name: modules-ubuntu
-            context: stable/ubuntu/modules/release
+            context: docker/ubuntu/modules/release
             tags: |
               type=raw,value=modules-ubuntu,enable={{is_default_branch}}
           - name: modules-debug-ubuntu
-            context: stable/ubuntu/modules/debug
+            context: docker/ubuntu/modules/debug
             tags: |
               type=raw,value=modules-debug-ubuntu,enable={{is_default_branch}}
           - name: centos
-            context: stable/centos/default/release
+            context: docker/centos/default/release
             tags: |
               type=raw,value=centos,enable={{is_default_branch}}
           - name: debug-centos
-            context: stable/centos/default/debug
+            context: docker/centos/default/debug
             tags: |
               type=raw,value=debug-centos,enable={{is_default_branch}}
           - name: modules-centos
-            context: stable/centos/modules/release
+            context: docker/centos/modules/release
             tags: |
               type=raw,value=modules-centos,enable={{is_default_branch}}
           - name: modules-debug-centos
-            context: stable/centos/modules/debug
+            context: docker/centos/modules/debug
             tags: |
               type=raw,value=modules-debug-centos,enable={{is_default_branch}}
 
