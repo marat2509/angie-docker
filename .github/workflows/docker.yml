@@ -47,12 +47,12 @@ jobs:
               type=raw,value=stable-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=stable-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=semver,pattern={{version}},enable={{is_default_branch}},value=$VERSION
-              type=semver,pattern={{major}}.{{minor}},value=$VERSION,enable={{is_default_branch}}
-              type=semver,pattern={{major}},value=$VERSION,enable={{is_default_branch}}
-              type=semver,pattern={{major}}.{{minor}}.{{patch}}-alpine,value=$VERSION,enable={{is_default_branch}}
-              type=semver,pattern={{major}}.{{minor}}-alpine,value=$VERSION,enable={{is_default_branch}}
-              type=semver,pattern={{major}}-alpine,value=$VERSION,enable={{is_default_branch}}
+              type=semver,pattern={{version}},enable={{is_default_branch}}
+              type=semver,pattern={{major}}.{{minor}},enable={{is_default_branch}}
+              type=semver,pattern={{major}},enable={{is_default_branch}}
+              type=semver,pattern={{major}}.{{minor}}.{{patch}}-alpine,enable={{is_default_branch}}
+              type=semver,pattern={{major}}.{{minor}}-alpine,enable={{is_default_branch}}
+              type=semver,pattern={{major}}-alpine,enable={{is_default_branch}}
           - name: alpine-debug
             context: stable/alpine/default/debug
             tags: |
@@ -66,12 +66,12 @@ jobs:
               type=raw,value=stable-debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=debug-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=stable-debug-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=semver,pattern={{version}},enable={{is_default_branch}},value=$VERSION
-              type=semver,pattern={{major}}.{{minor}},value=$VERSION,enable={{is_default_branch}}
-              type=semver,pattern={{major}},value=$VERSION,enable={{is_default_branch}}
-              type=semver,pattern={{major}}.{{minor}}.{{patch}}-alpine,value=$VERSION,enable={{is_default_branch}}
-              type=semver,pattern={{major}}.{{minor}}-alpine,value=$VERSION,enable={{is_default_branch}}
-              type=semver,pattern={{major}}-alpine,value=$VERSION,enable={{is_default_branch}}
+              type=semver,pattern={{version}},enable={{is_default_branch}}
+              type=semver,pattern={{major}}.{{minor}},enable={{is_default_branch}}
+              type=semver,pattern={{major}},enable={{is_default_branch}}
+              type=semver,pattern={{major}}.{{minor}}.{{patch}}-alpine,enable={{is_default_branch}}
+              type=semver,pattern={{major}}.{{minor}}-alpine,enable={{is_default_branch}}
+              type=semver,pattern={{major}}-alpine,enable={{is_default_branch}}
           
     permissions:
       contents: read
