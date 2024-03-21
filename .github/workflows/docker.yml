@@ -47,7 +47,7 @@ jobs:
               type=raw,value=stable-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=stable-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=semver,enable={{is_default_branch}},value=$VERSION
+              type=semver,pattern={{version}},enable={{is_default_branch}},value=$VERSION
               type=semver,pattern={{major}}.{{minor}},value=$VERSION,enable={{is_default_branch}}
               type=semver,pattern={{major}},value=$VERSION,enable={{is_default_branch}}
               type=semver,pattern={{major}}.{{minor}}.{{patch}}-alpine,value=$VERSION,enable={{is_default_branch}}
@@ -66,7 +66,7 @@ jobs:
               type=raw,value=stable-debug-alpine-{{ branch }},enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=debug-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
               type=sha,prefix=stable-debug-alpine-,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-              type=semver,enable={{is_default_branch}},value=$VERSION
+              type=semver,pattern={{version}},enable={{is_default_branch}},value=$VERSION
               type=semver,pattern={{major}}.{{minor}},value=$VERSION,enable={{is_default_branch}}
               type=semver,pattern={{major}},value=$VERSION,enable={{is_default_branch}}
               type=semver,pattern={{major}}.{{minor}}.{{patch}}-alpine,value=$VERSION,enable={{is_default_branch}}
